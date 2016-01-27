@@ -7,6 +7,7 @@ package cacheservice;
 
 import java.net.*;
 import java.io.*;
+import org.json.simple.JSONObject;
 /**
  *
  * @author Rudolfaraya
@@ -29,7 +30,7 @@ public class CacheServer {
         ServerSocket serverSocketIndex;
         Socket socketIndex;
         DataOutputStream outIndex;
-        DataInputStream inIndex;
+        ObjectInputStream inIndex;
         String mensajeIndex;
         
         
@@ -67,8 +68,9 @@ public class CacheServer {
                         //LEER RESPUESTA DEL SERVIDOR INDEX
                         serverSocketIndex = new ServerSocket(6666);
                         socketIndex = serverSocketIndex.accept();
-                        inIndex = new DataInputStream(socketIndex.getInputStream());
-                        String mensajeRecibidoIndex = inIndex.readUTF();
+                        inIndex = new ObjectInputStream(socketIndex.getInputStream());
+                        JSONObject mensajeRecibidoIndex = (JSONObject) inIndex.readObject();
+                       
                         System.out.println("He recibido del SERVIDOR INDEX: "+mensajeRecibidoIndex);
                         
                         //outIndex.close();
